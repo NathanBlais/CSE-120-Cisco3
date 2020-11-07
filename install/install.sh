@@ -9,7 +9,8 @@
 
 
 ##### VARIABLES #####
-
+_os="none"
+distribution="none"
 
 ###Distro Specific Imports###
 
@@ -26,10 +27,6 @@
 #
 : '
 
-detect if user is root
-
-Detect which Operating System the user is using
-
 See if the programs and their same version numbers are already installed
 # see which setup already exists
 
@@ -41,41 +38,78 @@ Choose whether User or Server
 
 '
 main(){
+#Header
+	echo "=*=*=*=*=*=*=*=*=*=*=*=Installer=*=*=*=*=*=*=*=*=*=*=*="
+
 #Check OS & Distro
+	osCheck
 	distroCheck
 
-#if Distro is DietPi install Wiregaurd using DietPie's own installer.
-	if [$DIS == "DietPie"];
-    #install Wiregaurd using DietPie's own installer.
-    	then $dietpi-software install 172
-		end 0
+#Install using OS's normal method
+	echo "=*=*=Starting Installation=*=*="
+	if [ $_os = "Linux" ]; then
+		case $distribution in 
+		DietPi)
+			#install Wiregaurd using DietPie's own installer.
+			/boot/dietpi/dietpi-software install 172
+			echo $?
+			#then install other things
+			exit 0;;
+		Debian|Raspbian|Ubuntu)
+			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
+			exit 1;;
+		*)
+			echo "Your distribution ($distribution) is not supported. "
+			exit 1;;
+		esac		
+	else
+		echo "The program should have already ended"
+		exit 1
 	fi
-
+	
 
 #Check that user is root
 	rootCheck
 
 #Check for disk space
 	#diskSpaceCheck
-
-
-
 }
-
-
 
 ##### FUNCTIONS #####
 
-#Check for compatability 
+##Check for compatability##
+
+osCheck(){
+#List of OS found here https://en.wikipedia.org/wiki/Uname
+	_os=`uname`
+	case $_os in 
+		Linux)
+			echo "LINUX is supported" ;;
+		Darwin|*BSD|SunOS|Windows*)
+			echo "Your operating system $_os is not yet supported"
+			exit 1 ;;
+  		*)
+			echo "unknown: $OSTYPE"
+			exit 1 ;;
+	esac 
+
+}
 
 distroCheck(){
 	#grab the distro
-	DIS=$(uname -n)
+	distribution=$(uname -n) #`uname -n`
 
 	#check the distro
-	if [[$DIS == "DietPi"]]; #|"Debian"|"Raspbian"|"Ubuntu"];
-		then echo "DIS=${DIS}" > ${tempsetupVarsFile}
-	fi
+	case $distribution in 
+	DietPi)
+		echo "Your distribution ($distribution) is supported.";;
+	Debian|Raspbian|Ubuntu)
+		echo "Your distribution ($distribution) is a WIP, but not yet supported. "
+		exit 1;;
+	*)
+		echo "Your distribution ($distribution) is not supported. "
+		exit 1;;
+	esac
 }
 
 rootCheck(){
