@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #name of project
 #description of project
 #project website
@@ -14,17 +14,6 @@ distribution="none"
 
 ###Distro Specific Imports###
 
-## Import DietPi-Globals ---------------------------------------------------------------
-	#. /boot/dietpi/func/dietpi-globals
-	#G_CHECK_ROOT_USER
-	#G_CHECK_ROOTFS_RW
-	#G_INIT
-
-	# Filepath
-	#readonly FP_INSTALLED_FILE='/boot/dietpi/.installed'
-	#readonly FP_INSTALLED_FILE_TMP='.installed'
-
-#
 : '
 
 See if the programs and their same version numbers are already installed
@@ -54,10 +43,12 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
+			apt-get update && apt-get install qrencode
 			exit 0;;
 		Debian|Raspbian|Ubuntu)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
 			exit 1;;
+			apt-get update && apt-get install iptables wireguard qrencode
 		*)
 			echo "Your distribution ($distribution) is not supported. "
 			exit 1;;
