@@ -20,10 +20,10 @@
     wg genkey | tee /etc/wireguard/keys/server_private.key | wg pubkey > /etc/wireguard/keys/server_public.key
 
 	# Server config
-	[[ -f 'wgmgmtlan0.conf' ]] || cat << _EOF_ > wgmgmtlan0.conf
+	[[ -f 'wg0.conf' ]] || cat << _EOF_ > wg0.conf
 
 [Interface]
-Address = 10.6.0.1/24
+Address = 10.8.0.1/24
 SaveConfig = true
 PrivateKey = $(<server_private.key)
 ListenPort = 51820
@@ -38,4 +38,4 @@ _EOF_
         exit 1;
     fi
 
-    systemctl enable wg-quick@wgmgmtlan0
+    systemctl enable wg-quick@wg0
