@@ -3,11 +3,21 @@
 #description of project
 #project website
 
+#How to use this script: 
+: '
+    When you call the script it should be used like this:
+       ./client_conf_make.sh "name of client"
+
+'
+
 ##### VARIABLES #####
-clientName="none"
+clientName = "$@"
 
 
 ##Start##
+
+# Make sure name isn't already in use
+##add this funtionality later or move it somewhere else 
 
 # Create Client keys
     wg genkey | tee /etc/wireguard/keys/client_private.key | wg pubkey > /etc/wireguard/keys/client_public.key
@@ -27,11 +37,11 @@ fi
 
 # Configure client in the server cinfig
 	cat << EOF >> /etc/wireguard/wg0.conf
-# $clientName added 
+# $clientName begin added 
 [Peer]
 PublicKey = $(<client_public.key)
 AllowedIPs = 10.8.0.$octet/32
-
+#$clientName end
 EOF
 
 
