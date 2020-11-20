@@ -7,7 +7,7 @@
 : '
     When you call the script it should be used like this:
        ./client_conf_make.sh "name of client"
-
+	   
 '
 
 ##### VARIABLES #####
@@ -19,15 +19,16 @@ clientName = "$@"
 # Make sure name isn't already in use
 ##add this funtionality later or move it somewhere else 
 
-# Create Client keys
-    wg genkey | tee /etc/wireguard/keys/client_private.key | wg pubkey > /etc/wireguard/keys/client_public.key
-
 # Find an unused number for the last octet of the client IP
 
 octet=2
-while grep AllowedIPs /etc/wireguard/wg0.conf | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q "$octet"; do
+while [grep AllowedIPs /etc/wireguard/wg0.conf | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q "$octet"]; do #| grep -q "$octet"]
 	(( octet++ ))
 done
+
+# Create Client keys
+wg genkey | tee /etc/wireguard/keys/client_private$octet.key | wg pubkey > /etc/wireguard/keys/client_public$octet.key
+
 
 # Check if address space is full
 if [[ "$octet" -eq 255 ]]; then
@@ -39,7 +40,7 @@ fi
 	cat << EOF >> /etc/wireguard/wg0.conf
 # $clientName begin added 
 [Peer]
-PublicKey = $(<client_public.key)
+PublicKey = $(</etc/wireguard/keys/client_public$octet.key)
 AllowedIPs = 10.8.0.$octet/32
 #$clientName end
 EOF
@@ -50,10 +51,10 @@ EOF
 [Interface]
 Address = 10.8.0.$octet/24$
 DNS = cat /etc/resolv.conf | cut -d " " -f 2 | cut -d $'\n'  -f 1
-PrivateKey = $(<client_private.key)
+PrivateKey = $(</etc/wireguard/keys/client_private$octet.key)
 
 [Peer]
-PublicKey = $(<server_public.key)
+PublicKey = $(</etc/wireguard/server_public.key)
 # Tunnel all network traffic through the VPN:
 #       AllowedIPs = 0.0.0.0/0, ::/0
 # Tunnel access to server-side local network only:

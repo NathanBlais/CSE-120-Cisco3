@@ -50,8 +50,6 @@ main(){
 			#set up server config file
 			./
 
-
-
 			exit 0;;
 		Debian|Raspbian|Ubuntu)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
