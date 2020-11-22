@@ -11,50 +11,59 @@
 '
 
 ##### VARIABLES #####
-clientName = "$@"
-
+clientName="$1"
 
 ##Start##
 
-# Make sure name isn't already in use
+# Make sure name isn't already in use and isn't empty
 ##add this funtionality later or move it somewhere else 
 
 # Find an unused number for the last octet of the client IP
-
 octet=2
-while [grep AllowedIPs /etc/wireguard/wg0.conf | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q "$octet"]; do #| grep -q "$octet"]
-	(( octet++ ))
+while grep AllowedIPs /etc/wireguard/wg0.conf | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q $octet; do 
+    octet=$((octet + 1))
 done
 
-# Create Client keys
-wg genkey | tee /etc/wireguard/keys/client_private$octet.key | wg pubkey > /etc/wireguard/keys/client_public$octet.key
+# Create folder if nonexistent
+test ! -d /etc/wireguard/keys && mkdir /etc/wireguard/keys
 
+# Create Client keys
+wg genkey | tee /etc/wireguard/keys/client_private$((octet - 1)).key | wg pubkey > /etc/wireguard/keys/client_public$((octet - 1)).key
 
 # Check if address space is full
-if [[ "$octet" -eq 255 ]]; then
+if [ "$octet" -eq 255 ]; then
 	echo "253 clients are already configured. The WireGuard internal subnet is full!"
 	exit
 fi
 
+clientNumber=$((octet - 1))
+PubKey=$(cat /etc/wireguard/keys/client_public$clientNumber.key)
+
 # Configure client in the server cinfig
 	cat << EOF >> /etc/wireguard/wg0.conf
-# $clientName begin added 
+# Client $clientNumber: $clientName begin 
 [Peer]
-PublicKey = $(</etc/wireguard/keys/client_public$octet.key)
+PublicKey = $PubKey
 AllowedIPs = 10.8.0.$octet/32
 #$clientName end
+
 EOF
 
+# Create folder if nonexistent
+test ! -d /etc/wireguard/client-conf && mkdir /etc/wireguard/client-conf
 
+PriKey=$(cat /etc/wireguard/keys/client_private$clientNumber.key)
+SPriKey=$(cat /etc/wireguard/server_public.key)
+DNSholder=$(echo $(cat /etc/resolv.conf) | cut -d ' ' -f 2)
 # Create client config
-	[[ -f 'wg0.conf-client' ]] || cat << _EOF_ > wg0-client.conf
+	[ -f '/etc/wireguard/client-conf/wg0-client$clientNumber.conf' ] || cat << _EOF_ > /etc/wireguard/client-conf/wg0-client$clientNumber.conf
 [Interface]
-Address = 10.8.0.$octet/24$
-DNS = cat /etc/resolv.conf | cut -d " " -f 2 | cut -d $'\n'  -f 1
-PrivateKey = $(</etc/wireguard/keys/client_private$octet.key)
+Address = 10.8.0.$octet/24
+DNS = $DNSholder
+PrivateKey = $PriKey
 
 [Peer]
-PublicKey = $(</etc/wireguard/server_public.key)
+PublicKey = $SPriKey
 # Tunnel all network traffic through the VPN:
 #       AllowedIPs = 0.0.0.0/0, ::/0
 # Tunnel access to server-side local network only:
@@ -67,4 +76,5 @@ Endpoint = $(hostname -I | cut -d " " -f 1):51820
 #Uncomment the following, if you're behind a NAT and want the connection to be kept alive.
 #PersistentKeepalive = 25
 _EOF_
-}
+
+exit
