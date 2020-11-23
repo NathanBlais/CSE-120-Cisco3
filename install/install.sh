@@ -43,18 +43,18 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
-			apt-get update && apt-get install qrencode 
+			#apt-get update && apt-get install qrencode 
 			
 			#use pip to install pyrout2 https://github.com/svinota/pyroute2
 
 			#set up server config file
-			./
+			
 
 			exit 0;;
 		Debian|Raspbian|Ubuntu)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
 			exit 1;;
-			apt-get update && apt-get install iptables wireguard qrencode
+			#apt-get update && apt-get install iptables wireguard qrencode
 		*)
 			echo "Your distribution ($distribution) is not supported. "
 			exit 1;;

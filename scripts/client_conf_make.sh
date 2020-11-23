@@ -44,7 +44,7 @@ PubKey=$(cat /etc/wireguard/keys/client_public$clientNumber.key)
 # Client $clientNumber: $clientName begin 
 [Peer]
 PublicKey = $PubKey
-AllowedIPs = 10.8.0.$octet/32
+AllowedIPs = 10.9.0.$octet/32
 #$clientName end
 
 EOF
@@ -58,7 +58,7 @@ DNSholder=$(echo $(cat /etc/resolv.conf) | cut -d ' ' -f 2)
 # Create client config
 	[ -f '/etc/wireguard/client-conf/wg0-client$clientNumber.conf' ] || cat << _EOF_ > /etc/wireguard/client-conf/wg0-client$clientNumber.conf
 [Interface]
-Address = 10.8.0.$octet/24
+Address = 10.9.0.$octet/24
 DNS = $DNSholder
 PrivateKey = $PriKey
 
