@@ -15,6 +15,7 @@ configPath="/etc/wireguard/wg0.conf"
 directoryPath="/etc/wireguard/"
 removeClient="$1"
 
+##Start##
 doesClientExist=$(grep "$removeClient begin" $configPath | cut -d ' ' -f 4)
 
 if [ $doesClientExist = $removeClient ];then

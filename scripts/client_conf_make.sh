@@ -20,7 +20,13 @@ directoryPath="/etc/wireguard/"
 ##Start##
 
 # Make sure name isn't already in use and isn't empty
-##add this funtionality later or move it somewhere else 
+
+doesClientExist=$(grep "$clientName begin" $configPath | cut -d ' ' -f 4)
+
+if [ $doesClientExist = $clientName ];then
+    echo "Client already Exists"
+    exit 1
+fi
 
 # Find an unused number for the last octet of the client IP
 octet=2
@@ -81,4 +87,4 @@ Endpoint = $(hostname -I | cut -d " " -f 1):51820
 #PersistentKeepalive = 25
 _EOF_
 
-exit
+exit 0
