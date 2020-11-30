@@ -30,9 +30,15 @@ main(){
 #Header
 	echo "=*=*=*=*=*=*=*=*=*=*=*=Installer=*=*=*=*=*=*=*=*=*=*=*="
 
+#Check that user is root
+	rootCheck
+
 #Check OS & Distro
 	osCheck
 	distroCheck
+
+#Check for disk space
+	#diskSpaceCheck
 
 #Install using OS's normal method
 	echo "=*=*=Starting Installation=*=*="
@@ -63,13 +69,6 @@ main(){
 		echo "The program should have already ended"
 		exit 1
 	fi
-	
-
-#Check that user is root
-	rootCheck
-
-#Check for disk space
-	#diskSpaceCheck
 }
 
 ##### FUNCTIONS #####

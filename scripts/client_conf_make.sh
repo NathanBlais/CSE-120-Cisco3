@@ -70,7 +70,7 @@ PublicKey = $SPriKey
 #       AllowedIPs = 192.168.1.0/24
 # Tunnel access to VPN server only:
 #       AllowedIPs = 192.168.1.20/32
-AllowedIPs = 0.0.0.0/0, ::/0
+AllowedIPs = 0.0.0.0/0, ::/0, $DNSholder
 Endpoint = $(hostname -I | cut -d " " -f 1):51820
 
 #Uncomment the following, if you're behind a NAT and want the connection to be kept alive.
