@@ -1,0 +1,10 @@
+{% extends "base.hmtl" %}
+
+{% block title %}Create an Account{% endblock %}
+
+{% block content %}
+	<form method="POST" class="form-group">
+		{{form}}
+		<button type="sumbit" class="btn btn-success">Register</button>
+	</form>
+{% endblock %}

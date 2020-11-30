@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+
+{% if user.is_authenticated %}
+	{% block content %}
+        	<h1>Connect Page</h1>
+	
+        	<p>Connection</p>
+		<button type="button">Connect!</button>
+		<a href="http://10.0.0.61:8080/contact/"><button>Link Text</button></a>
+	{% endblock %}
+{% else %}
+	<p>Login <a href="/login">Here</a></p>
+{% endif %}
