@@ -6,12 +6,16 @@
 #How to use this script: 
 : '
     When you call the script it should be used like this:
-       ./client_conf_make.sh "name of client"
+       ./client_conf_make.sh /path/to/server/config/wg0.conf "name of client"
 	   
 '
 
 ##### VARIABLES #####
 clientName="$1"
+#configPath="/Users/nathanblais/wg0.conf"
+#directoryPath="/Users/nathanblais"
+configPath="/etc/wireguard/wg0.conf"
+directoryPath="/etc/wireguard/"
 
 ##Start##
 
@@ -20,15 +24,15 @@ clientName="$1"
 
 # Find an unused number for the last octet of the client IP
 octet=2
-while grep AllowedIPs /etc/wireguard/wg0.conf | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q $octet; do 
+while grep AllowedIPs $configPath | cut -d "." -f 4 | cut -d "/" -f 1 | grep -q $octet; do 
     octet=$((octet + 1))
 done
 
 # Create folder if nonexistent
-test ! -d /etc/wireguard/keys && mkdir /etc/wireguard/keys
+test ! -d $directoryPath/keys && mkdir $directoryPath/keys
 
 # Create Client keys
-wg genkey | tee /etc/wireguard/keys/client_private$((octet - 1)).key | wg pubkey > /etc/wireguard/keys/client_public$((octet - 1)).key
+wg genkey | tee $directoryPath/keys/client_private$((octet - 1)).key | wg pubkey > $directoryPath/keys/client_public$((octet - 1)).key
 
 # Check if address space is full
 if [ "$octet" -eq 255 ]; then
@@ -37,26 +41,26 @@ if [ "$octet" -eq 255 ]; then
 fi
 
 clientNumber=$((octet - 1))
-PubKey=$(cat /etc/wireguard/keys/client_public$clientNumber.key)
+PubKey=$(cat $directoryPath/keys/client_public$clientNumber.key)
 
 # Configure client in the server cinfig
-	cat << EOF >> /etc/wireguard/wg0.conf
+	cat << EOF >> $directoryPath/wg0.conf
+	
 # Client $clientNumber: $clientName begin 
 [Peer]
 PublicKey = $PubKey
 AllowedIPs = 10.9.0.$octet/32
 #$clientName end
-
 EOF
 
 # Create folder if nonexistent
-test ! -d /etc/wireguard/client-conf && mkdir /etc/wireguard/client-conf
+test ! -d $directoryPath/client-conf && mkdir $directoryPath/client-conf
 
-PriKey=$(cat /etc/wireguard/keys/client_private$clientNumber.key)
-SPriKey=$(cat /etc/wireguard/server_public.key)
+PriKey=$(cat $directoryPath/keys/client_private$clientNumber.key)
+SPriKey=$(cat $directoryPath/server_public.key)
 DNSholder=$(echo $(cat /etc/resolv.conf) | cut -d ' ' -f 2)
 # Create client config
-	[ -f '/etc/wireguard/client-conf/wg0-client$clientNumber.conf' ] || cat << _EOF_ > /etc/wireguard/client-conf/wg0-client$clientNumber.conf
+	[ -f '$directoryPath/client-conf/wg0-client$clientNumber.conf' ] || cat << _EOF_ > $directoryPath/client-conf/wg0-client$clientNumber.conf
 [Interface]
 Address = 10.9.0.$octet/24
 DNS = $DNSholder

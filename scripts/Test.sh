@@ -1,7 +1,19 @@
 #!/bin/sh
 
 
+configPath="/etc/wireguard/wg0.conf"
+directoryPath="/etc/wireguard/"
+removeClient="jerma33"
 
-test ! -d /etc/wireguard/keys && echo "inside" || echo "outside"
+doesClientExist=$(grep "$removeClient begin" $configPath | cut -d ' ' -f 4)
 
-# | cut -d $'\n' -f 1c
+if [ $doesClientExist = $removeClient ];then
+    echo "Client Exists"
+    #remove client
+    sed -i "/\ $removeClient begin/,/\# $removeClient end/d" $configPath
+    echo "Client Removed"
+    exit 0
+else
+    echo "Client Does Not Exists"
+    exit 1
+fi

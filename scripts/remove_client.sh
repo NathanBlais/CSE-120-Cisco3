@@ -11,15 +11,22 @@
 '
 
 ##### VARIABLES #####
+configPath="/etc/wireguard/wg0.conf"
+directoryPath="/etc/wireguard/"
+removeClient="$1"
 
-#remove client from server.conf
+doesClientExist=$(grep "$removeClient begin" $configPath | cut -d ' ' -f 4)
 
-if [ grep "# $REMOVECLIENT begin"]
-
-
-REMOVECLIENT = "$@"
-sed -i "/\# $REMOVECLIENT begin/,/\# $REMOVECLIENT end/d" /etc/wireguard/wg0.conf
-echo "Client named $REMOVECLIENT has been removed."
+if [ $doesClientExist = $removeClient ];then
+    echo "Client Exists"
+    #remove client
+    sed -i "/\ $removeClient begin/,/\# $removeClient end/d" $configPath
+    echo "Client Removed"
+    exit 0
+else
+    echo "Client Does Not Exists"
+    exit 1
+fi
 
 #reboot wiregaurd
-wg syncconf wg0 <(wg-quick strip wg0)
+wg syncconf wg0 $configPath
