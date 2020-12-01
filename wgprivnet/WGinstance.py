@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
+import subprocess
+import sys
+
 from pyroute2 import netlink
 
 from .setupQrKey import setupQrKey
 from .setupPubKey import setupPubKey
 from .hostInfo import hostInfo
 
+bashCommand = "cwm --rdf test.rdf --ntriples > test.nt"
+
 class WireGuard(object):
     __slots__ = ( "__socket" )
 
     def __init__(self, **kwargs):
-        self.__socket = netlink.generic.GenericNetlinkSocket()
-        self.__socket.bind('wireguard', self.__device)
+        
 
     def __del__(self):
-        self.__socket.close()
+        process = subprocess.run(['./../scripts/remove_client.sh'], stdout=subprocess.PIPE)
+        
 
     def __get(self, device):
         flags = netlink.NLM_F_REQUEST | netlink.NLM_F_DUMP
@@ -33,8 +38,9 @@ class WireGuard(object):
 
     def remove_peer(self, interface, publicKey):
 
-    def set_peer(self, interface, publicKey, qrKey, endpoint):
+    def set_peer(Uname):
+        process=subprocess.run(['./client_conf_make.sh', Uname], stdout=subprocess.PIPE)
 
-    def refreshConnections():
+
         
 
