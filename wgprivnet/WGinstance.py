@@ -20,7 +20,7 @@ class WireGuard(object):
 
            def list_peers(self):
                       process = subprocess.run(['./../scripts/list_peers.sh'], stdout=subprocess.PIPE)
-                      print process
+                      print(process)
 
            def make_client_config(username):
                       process=subprocess.run(['./client_conf_make.sh', username], stdout=subprocess.PIPE)
