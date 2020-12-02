@@ -6,7 +6,7 @@
 #How to use this script: 
 : '
     When you call the script it should be used like this:
-       ./client_conf_make.sh /path/to/server/config/wg0.conf "name of client"
+       ./client_conf_make.sh "name of client"
 	   
 '
 
@@ -48,7 +48,7 @@ fi
 
 clientNumber=$((octet - 1))
 PubKey=$(cat $directoryPath/keys/client_public$clientNumber.key)
-
+ 
 # Configure client in the server cinfig
 	cat << EOF >> $directoryPath/wg0.conf
 	
