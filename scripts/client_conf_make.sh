@@ -48,7 +48,7 @@ fi
 
 clientNumber=$((octet - 1))
 PubKey=$(cat $directoryPath/keys/client_public$clientNumber.key)
-
+ 
 # Configure client in the server cinfig
 	cat << EOF >> $directoryPath/wg0.conf
 	

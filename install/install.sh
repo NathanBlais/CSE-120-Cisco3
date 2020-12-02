@@ -30,13 +30,13 @@ main(){
 #Header
 	echo "=*=*=*=*=*=*=*=*=*=*=*=Installer=*=*=*=*=*=*=*=*=*=*=*="
 
-#Check that user is root
-	rootCheck
-
 #Check OS & Distro
 	osCheck
 	distroCheck
 
+#Check that user is root
+	rootCheck
+	
 #Check for disk space
 	#diskSpaceCheck
 
@@ -49,7 +49,9 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
-			#apt-get update && apt-get install qrencode 
+			#apt-get update && apt-get install qrencode pip
+
+			#pip install 
 			
 			#use pip to install pyrout2 https://github.com/svinota/pyroute2
 
