@@ -8,6 +8,10 @@ def Verify(Username, Password):
 
 def callback(Username, Password):
     with open("username.txt", "a+") as fh:
+        isduplicate = open("username.txt").read().find(Username)
+        if isduplicate != -1:
+            print("Duplicate found")
+            return
         fh.write(Username+("\n"))
     with open("password.txt", "a+") as fh:
         fh.write(Password+("\n"))
