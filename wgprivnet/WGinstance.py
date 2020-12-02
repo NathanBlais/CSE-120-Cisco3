@@ -17,12 +17,6 @@ class WireGuard(object):
     def change_dns(path, IP_Addr):
         process = subprocess.run(['./../scripts/change_DNS.sh', path, IP_Addr], stdout=subprocess.PIPE)
 
-    def get_interface(self, interface):
-        device = self.__device.get_device(interface)
-        connections = self.__get(device)
-
-        return hostInfo(connections)
-
     def list_peers():
         process = subprocess.run(['./../scripts/remove_client.sh', username], stdout=subprocess.PIPE)
 
