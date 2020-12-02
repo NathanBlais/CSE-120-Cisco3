@@ -49,9 +49,10 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
-			#apt-get update && apt-get install qrencode 
+			#apt-get update && apt-get install qrencode python3-tk
 			
 			#use pip to install pyrout2 https://github.com/svinota/pyroute2
+			Tkinter or Tk
 
 			#set up server config file
 			
