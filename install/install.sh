@@ -49,6 +49,7 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
+
 			#apt-get update && apt-get install qrencode pip python3-tk
 
 			#pip install 
