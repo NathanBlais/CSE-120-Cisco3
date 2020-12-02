@@ -3,13 +3,13 @@ from tkinter import *
 
 class hostInfo(object):
 	
-	def Verify(Username, Password):
+	def Verify(self, Username, Password):
 		f = open("username.txt", "r")
 		h = open("password.txt", "r")
 		if Username in f and Password in h:
 			return True
 
-	def callback(Username, Password):
+	def callback(self, Username, Password):
 		with open("username.txt", "a+") as fh:
 			isduplicate = open("username.txt").read().find(Username)
 			if isduplicate != -1:
