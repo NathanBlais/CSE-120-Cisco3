@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-From tkinter import *
+from tkinter import *
 
 class hostInfo(object):
 	
