@@ -19,7 +19,7 @@ class hostInfo(object):
 		with open("password.txt", "a+") as fh:
 			fh.write(Password+("\n"))
 
-	def login():
+	def login(self):
 		m = Tk()
 		m.geometry("400x200")
 		m.title("Create Administer User")
