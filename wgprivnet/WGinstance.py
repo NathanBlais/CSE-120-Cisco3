@@ -10,9 +10,6 @@ from hostInfo import hostInfo
 
 userLogin=hostInfo()
 
-class if __name__ == "__main__":
-    pass
-
 class WireGuard(object):
            
     def remove_client(username):
@@ -28,5 +25,5 @@ class WireGuard(object):
         process=subprocess.run(['./client_conf_make.sh', username], stdout=subprocess.PIPE)
 
     def login():
-        userLogin.login_user()
+        userLogin.login()
         
