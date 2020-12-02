@@ -8,25 +8,14 @@ from .setupQrKey import setupQrKey
 from .setupPubKey import setupPubKey
 from .hostInfo import hostInfo
 
-bashCommand = "cwm --rdf test.rdf --ntriples > test.nt"
-
 class WireGuard(object):
-    __slots__ = ( "__socket" )
-
     def __init__(self, **kwargs):
         
-
-    def __del__(self):
-        process = subprocess.run(['./../scripts/remove_client.sh'], stdout=subprocess.PIPE)
+    def remove_client(username):
+        process = subprocess.run(['./../scripts/remove_client.sh', username], stdout=subprocess.PIPE)
         
-
-    def __get(self, device):
-        flags = netlink.NLM_F_REQUEST | netlink.NLM_F_DUMP
-        return self.__socket.nlm_request(device, msg_type=self.__socket.prid, msg_flags=flags)
-
-    def __set(self, device):
-        flags = netlink.NLM_F_ACK | netlink.NLM_F_REQUEST
-        return self.__socket.nlm_request(device, msg_type=self.__socket.prid, msg_flags=flags)
+    def change_dns(path, IP_Addr):
+        process = subprocess.run(['./../scripts/change_DNS.sh', path, IP_Addr], stdout=subprocess.PIPE)
 
     def get_interface(self, interface):
         device = self.__device.get_device(interface)
@@ -34,10 +23,9 @@ class WireGuard(object):
 
         return hostInfo(connections)
 
-    def set_interface(self, interface, private_key, port):
+    def list_peers():
+        process = subprocess.run(['./../scripts/remove_client.sh', username], stdout=subprocess.PIPE)
 
-    def remove_peer(self, interface, publicKey):
-
-    def set_peer(Uname):
-        process=subprocess.run(['./client_conf_make.sh', Uname], stdout=subprocess.PIPE)
+    def make_client_config(username):
+        process=subprocess.run(['./client_conf_make.sh', username], stdout=subprocess.PIPE)
 
