@@ -8,6 +8,8 @@ from .setupQrKey import setupQrKey
 from .setupPubKey import setupPubKey
 from .hostInfo import hostInfo
 
+userLogin=hostInfo()
+
 class WireGuard(object):
     def __init__(self, **kwargs):
         
@@ -23,3 +25,6 @@ class WireGuard(object):
     def make_client_config(username):
         process=subprocess.run(['./client_conf_make.sh', username], stdout=subprocess.PIPE)
 
+    def login():
+        userLogin.login_user()
+        
