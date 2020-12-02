@@ -49,15 +49,14 @@ main(){
 			/boot/dietpi/dietpi-software install 172
 			echo $?
 			#then install other things
-			#apt-get update && apt-get install qrencode pip
+			#apt-get update && apt-get install qrencode pip python3-tk
 
 			#pip install 
 			
 			#use pip to install pyrout2 https://github.com/svinota/pyroute2
-
+			#Tkinter or Tk
 			#set up server config file
 			
-
 			exit 0;;
 		Debian|Raspbian|Ubuntu)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
