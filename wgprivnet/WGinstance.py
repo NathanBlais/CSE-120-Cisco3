@@ -4,15 +4,17 @@ import sys
 
 from pyroute2 import netlink
 
-from .setupQrKey import setupQrKey
-from .setupPubKey import setupPubKey
-from .hostInfo import hostInfo
+from setupQrKey import setupQrKey
+from setupPubKey import setupPubKey
+from hostInfo import hostInfo
 
 userLogin=hostInfo()
 
+class if __name__ == "__main__":
+    pass
+
 class WireGuard(object):
-    def __init__(self, **kwargs):
-        
+           
     def remove_client(username):
         process = subprocess.run(['./../scripts/remove_client.sh', username], stdout=subprocess.PIPE)
         
