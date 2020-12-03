@@ -38,7 +38,7 @@ class hostInfo(object):
 		B.pack()
 
 		Bool = verify_login(Username, Password)
-		if (Bool):
+		if (!Bool):
 			login()
 		m.mainloop()
 
