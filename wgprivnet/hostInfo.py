@@ -34,7 +34,7 @@ class hostInfo(object):
 		L2.place(x = 15, y = 50)
 		E2 = Entry(m, textvariable=Password, bd=5, width = "20")
 		E2.pack(side=TOP)
-		B = Button(m, text="Create Administer", width="20", height="1", command=lambda:call_back(E1.get(), E2.get()))
+		B = Button(m, text="Create Administer", width="20", height="1", command=lambda:self.call_back(E1.get(), E2.get()))
 		B.pack()
 
 		Bool = self.verify_login(Username, Password)
