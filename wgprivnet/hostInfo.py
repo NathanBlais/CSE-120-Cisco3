@@ -37,7 +37,7 @@ class hostInfo(object):
 		B = Button(m, text="Create Administer", width="20", height="1", command=lambda:call_back(E1.get(), E2.get()))
 		B.pack()
 
-		Bool = verify_login(Username, Password)
+		Bool = self.verify_login(Username, Password)
 		if (Bool):
 			login()
 		m.mainloop()
