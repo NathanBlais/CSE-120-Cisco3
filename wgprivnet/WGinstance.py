@@ -13,13 +13,13 @@ userLogin=hostInfo()
 class WireGuard(object):
 
            def remove_client(self, username):
-                      process = subprocess.run(['./../scripts/remove_client.sh', username], stdout=subprocess.PIPE)
+                      process = subprocess.run(['./scripts/remove_client.sh', username], stdout=subprocess.PIPE)
 
            def change_dns(self, path, IP_Addr):
-                      process = subprocess.run(['./../scripts/change_DNS.sh', path, IP_Addr], stdout=subprocess.PIPE)
+                      process = subprocess.run(['./scripts/change_DNS.sh', path, IP_Addr], stdout=subprocess.PIPE)
 
            def list_peers(self):
-                      process = subprocess.run(['./../scripts/list_peers.sh'], stdout=subprocess.PIPE)
+                      process = subprocess.run(['./scripts/list_peers.sh'], stdout=subprocess.PIPE)
                       print(process)
 
            def make_client_config(self, username):
