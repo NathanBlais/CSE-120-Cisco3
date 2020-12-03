@@ -23,7 +23,7 @@ class WireGuard(object):
                       print(process)
 
            def make_client_config(self, username):
-                      process=subprocess.run(['./client_conf_make.sh', username], stdout=subprocess.PIPE)
+                      process=subprocess.run(['./scripts/client_conf_make.sh', username], stdout=subprocess.PIPE)
 
            def login(self):
                       userLogin.login()
