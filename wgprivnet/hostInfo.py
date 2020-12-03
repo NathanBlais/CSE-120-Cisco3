@@ -3,7 +3,7 @@ from tkinter import *
 
 class hostInfo(object):
 	
-	def Verify(self, Username, Password):
+	def verify_login(self, Username, Password):
 		f = open("username.txt", "r")
 		h = open("password.txt", "r")
 		if Username in f and Password in h:
@@ -37,7 +37,7 @@ class hostInfo(object):
 		B = Button(m, text="Create Administer", width="20", height="1", command=lambda:call_back(E1.get(), E2.get()))
 		B.pack()
 
-		Bool = Verify(Username, Password)
+		Bool = verify_login(Username, Password)
 		if (Bool):
 			login()
 		m.mainloop()
