@@ -6,8 +6,8 @@ class hostInfo(object):
 	def verify_login(self, Username, Password):
 		f = open("username.txt", "r")
 		h = open("password.txt", "r")
-		if Username in f and Password in h:
-			return True
+		if Username not in f or Password not in h:
+			return False
 
 	def call_back(self, Username, Password):
 		with open("username.txt", "a+") as fh:
@@ -38,7 +38,7 @@ class hostInfo(object):
 		B.pack()
 
 		Bool = verify_login(Username, Password)
-		if (!Bool):
+		if (Bool):
 			login()
 		m.mainloop()
 
