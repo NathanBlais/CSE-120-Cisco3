@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from wgprivnet.WGinstance import WireGuard
 
 
 # Create your views here.
@@ -15,9 +16,6 @@ def connect_view(request, *args, **kwargs):
 	if request.method == 'POST' and 'run_script' in request.POST:
 
     		# import function to run
-		print("Hello world")
-		from .wgprivnet.WGinstance import WireGuard
-
 		wg = WireGuard()
 		wg.list_peers()
 
