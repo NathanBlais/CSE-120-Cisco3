@@ -6,8 +6,11 @@
         	<h1>Connect Page</h1>
 	
         	<p>Connection</p>
-		<button type="button">Connect!</button>
-		<a href="http://10.0.0.61:8080/contact/"><button>Link Text</button></a>
+		<form method="post">
+			{% csrf_token %}
+			<button type = "submit" name ="run_script">Run script</button>
+		</form>
+
 	{% endblock %}
 {% else %}
 	<p>Login <a href="/login">Here</a></p>
