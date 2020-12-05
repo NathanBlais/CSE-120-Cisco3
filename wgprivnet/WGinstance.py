@@ -2,7 +2,7 @@
 import subprocess
 import sys
 
-from pyroute2 import netlink
+#from pyroute2 import netlink
 
 #from setupQrKey import setupQrKey
 #from setupPubKey import setupPubKey
