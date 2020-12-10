@@ -6,7 +6,7 @@ import sys
 
 #from setupQrKey import setupQrKey
 #from setupPubKey import setupPubKey
-from hostInfo import hostInfo
+from .hostInfo import hostInfo
 
 userLogin=hostInfo()
 
