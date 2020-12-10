@@ -21,7 +21,7 @@ def connect_view(request, *args, **kwargs):
 
     		# return user to required page
     		# return HttpResponseRedirect(reverse(app_name:view_name)
-			return render(request, "connect.html", {})
+		return render(request, "connect.html", {})
 	else:
 		return render(request, "connect.html", {})
 
