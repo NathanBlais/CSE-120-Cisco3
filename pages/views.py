@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from wgprivnet.WGinstance import WireGuard
@@ -26,16 +27,18 @@ def connect_view(request, *args, **kwargs):
                 wg.remove_client(removeid)
                 return render(request, "connect.html", {})
 
-        elif request.method == 'POST' and 'change_DNS' in request.POST:
-                wg = WireGuard()
-                wg.change_dns()
-                return render(request, "connect.html", {})
+        #elif request.method == 'POST' and 'change_DNS' in request.POST:
+                #wg = WireGuard()
+                #wg.change_dns()
+                #return render(request, "connect.html", {})
 
         elif request.method == 'POST' and 'make_client_config' in request.POST:
                 wg = WireGuard()
                 form = UserForm(request.POST)
+                addclient = request.POST.get('userinput')
+                print(addclient)
 
-                wg.make_client_config("form")
+                wg.make_client_config(addclient)
                 return render(request, "connect.html", {})
 
         elif request.method == 'POST' and 'login' in request.POST:
