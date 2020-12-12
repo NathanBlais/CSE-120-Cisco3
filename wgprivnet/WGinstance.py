@@ -2,11 +2,11 @@
 import subprocess
 import sys
 
-from pyroute2 import netlink
+#from pyroute2 import netlink
 
 #from setupQrKey import setupQrKey
 #from setupPubKey import setupPubKey
-from hostInfo import hostInfo
+from .hostInfo import hostInfo
 
 userLogin=hostInfo()
 

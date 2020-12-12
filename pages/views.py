@@ -13,15 +13,32 @@ def contact_view(request, *args, **kwargs):
 	#return HttpResponse("<h1>Contact Page</h1>")
 
 def connect_view(request, *args, **kwargs):
-	if request.method == 'POST' and 'run_script' in request.POST:
-
-    		# import function to run
+	if request.method == 'POST' and 'list_peers' in request.POST:
 		wg = WireGuard()
 		wg.list_peers()
+		return render(request, "connect.html", {})
 
-    		# return user to required page
-    		# return HttpResponseRedirect(reverse(app_name:view_name)
-			return render(request, "connect.html", {})
+	elif request.method == 'POST' and 'remove_client' in request.POST:
+		wg = WireGuard()
+		wg.remove_client(username)
+		return render(request, "connect.html", {})
+
+	elif request.method == 'POST' and 'change_DNS' in request.POST:
+                wg = WireGuard()
+                wg.change_dns()
+                return render(request, "connect.html", {})
+
+	elif request.method == 'POST' and 'make_client_config' in request.POST:
+                wg = WireGuard()
+                wg.make_client_config()
+                return render(request, "connect.html", {})
+
+	elif request.method == 'POST' and 'login' in request.POST:
+                wg = WireGuard()
+                wg.login()
+                return render(request, "connect.html", {})
+
+
 	else:
 		return render(request, "connect.html", {})
 
