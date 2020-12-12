@@ -13,7 +13,8 @@
 
                 <form method="post">
                         {% csrf_token %}
-                        <input type ="Text", name="username">
+                        {{ form }}
+                        <input type ="Text", name="userinput">
 
                         <button type = "submit" name ="remove_client">Remove_client</button>
                 </form>
@@ -31,6 +32,7 @@
                 <form method="post">
                         {% csrf_token %}
                         <input type ="Text", name="username">
+
                         <button type = "submit" name ="make_client_config">Make_client_config</button>
                 </form>
 
@@ -44,4 +46,3 @@
 {% else %}
         <p>Login <a href="/login">Here</a></p>
 {% endif %}
-
