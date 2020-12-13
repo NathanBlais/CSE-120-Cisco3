@@ -44,19 +44,19 @@ main(){
 	echo "=*=*=Starting Installation=*=*="
 	if [ $_os = "Linux" ]; then
 		case $distribution in 
+
 		DietPi)
-			#install Wiregaurd using DietPie's own installer.
-			/boot/dietpi/dietpi-software install 172
-			echo $?
-			#then install other things
-
-			#apt-get update && apt-get install qrencode pip python3-tk
-
-			#pip install 
-			
-			#use pip to install pyrout2 https://github.com/svinota/pyroute2
-			#Tkinter or Tk
+			#install from reposetory
+			apt-get update && apt-get -y install qrencode python3 python3-pip python3-tk python3-django apache2
+			#install from pip
+			pip3 install pyroute2 Django django-crispy-forms wheel virtualenv distlib tk setuptools asgiref
+			pip3 install --upgrade django
+			#install Wiregaurd, OpenSSH and __ using DietPie's own installer.
+			/boot/dietpi/dietpi-software install 172 0 6 			
 			#set up server config file
+
+			#start the website
+			python3 manage.py runserver 0.0.0.0:8080
 			
 			exit 0;;
 		Debian|Raspbian|Ubuntu)

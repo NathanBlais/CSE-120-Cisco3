@@ -7,7 +7,7 @@
 : '
     When you call the script it should be used like this:
        ./client_conf_make.sh "name of client"
-	   
+
 '
 
 ##### VARIABLES #####

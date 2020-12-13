@@ -7,7 +7,7 @@
 : '
     When you call the script it should be used like this:
       ./generateqrcode.sh /path/to/client.config
-       
+
 '
 
 ##### VARIABLES #####

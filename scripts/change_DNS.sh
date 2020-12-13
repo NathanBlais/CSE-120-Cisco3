@@ -7,7 +7,7 @@
 : '
     When you call the script it should be used like this:
        ./change_DNS.sh /path/to/wg0.conf "new dns ip" 
-	   
+
 '
 
 ##### VARIABLES #####
