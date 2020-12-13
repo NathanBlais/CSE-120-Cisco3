@@ -6,9 +6,9 @@ import sys
 
 #from setupQrKey import setupQrKey
 #from setupPubKey import setupPubKey
-from .hostInfo import hostInfo
+#from .hostInfo import hostInfo
 
-userLogin=hostInfo()
+#userLogin=hostInfo()
 
 class WireGuard(object):
 
@@ -21,6 +21,7 @@ class WireGuard(object):
            def list_peers(self):
                       process = subprocess.run(['./scripts/list_peers.sh'], stdout=subprocess.PIPE)
                       print(process)
+                      return process
 
            def make_client_config(self, username):
                       process=subprocess.run(['./scripts/client_conf_make.sh', username], stdout=subprocess.PIPE)

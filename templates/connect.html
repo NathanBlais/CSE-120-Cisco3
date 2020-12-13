@@ -6,6 +6,10 @@
         	<h1>Connect Page</h1>
 	
         	<p>Connection</p>
+		<form method="get">
+			(% csrf_token %}
+			<button type = "submit" name ="list_peers_get">List_peers_get</button>
+		</form>
 		<form method="post">
 			{% csrf_token %}
 			<button type = "submit" name ="list_peers">List_peers</button>
@@ -14,27 +18,17 @@
 		
                 <form method="post">
                         {% csrf_token %}
-			<input type ="Text" name="self">
-			<input type ="Text", name="username">
+			{{ form }}
+			<input type ="Text", name="userinput">
 
                         <button type = "submit" name ="remove_client">Remove_client</button>
                 </form>
 
 		
-                <form method="post">
-                        {% csrf_token %}
-			<input type ="Text", name="self">
-			<input type ="Text", name="path">
-			<input type ="Text", name="IP_Addr">
-
-                        <button type = "submit" name ="change_DNS">Change DNS</button>
-                </form>
-
 		
                 <form method="post">
                         {% csrf_token %}
-			<input type ="Text", name="self">
-			<input type ="Text", name="username">
+			<input type ="Text", name="userinput">
 			
                         <button type = "submit" name ="make_client_config">Make_client_config</button>
                 </form>

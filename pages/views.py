@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from wgprivnet.WGinstance import WireGuard
 
+from .forms import UserForm
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
@@ -15,22 +16,28 @@ def contact_view(request, *args, **kwargs):
 def connect_view(request, *args, **kwargs):
 	if request.method == 'POST' and 'list_peers' in request.POST:
 		wg = WireGuard()
-		wg.list_peers()
+		list_peers_string = wg.list_peers().stdout.decode("utf-8")
 		return render(request, "connect.html", {})
 
 	elif request.method == 'POST' and 'remove_client' in request.POST:
 		wg = WireGuard()
-		wg.remove_client(username)
+		form = UserForm(request.POST)
+		removeid = request.POST.get('userinput', None)
+		wg.remove_client(removeid)
 		return render(request, "connect.html", {})
 
-	elif request.method == 'POST' and 'change_DNS' in request.POST:
-                wg = WireGuard()
-                wg.change_dns()
-                return render(request, "connect.html", {})
+	#elif request.method == 'POST' and 'change_DNS' in request.POST:
+                #wg = WireGuard()
+                #wg.change_dns()
+                #return render(request, "connect.html", {})
 
 	elif request.method == 'POST' and 'make_client_config' in request.POST:
                 wg = WireGuard()
-                wg.make_client_config()
+                form = UserForm(request.POST)
+                addclient = request.POST.get('userinput')
+                print(addclient)
+
+                wg.make_client_config(addclient)
                 return render(request, "connect.html", {})
 
 	elif request.method == 'POST' and 'login' in request.POST:
