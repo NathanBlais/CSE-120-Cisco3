@@ -14,7 +14,12 @@ def contact_view(request, *args, **kwargs):
 	#return HttpResponse("<h1>Contact Page</h1>")
 
 def connect_view(request, *args, **kwargs):
-	if request.method == 'POST' and 'list_peers' in request.POST:
+	if request.method == 'GET' and 'list_peers_get' in request.GET:
+		wg = WireGuard()
+        list_peers_string = wg.list_peers().stdout.decode("utf-8"))
+		return HttpResponse(list_peers_string)
+		
+    elif request.method == 'POST' and 'list_peers' in request.POST:
 		wg = WireGuard()
 		list_peers_string = wg.list_peers().stdout.decode("utf-8")
 		return render(request, "connect.html", {})
