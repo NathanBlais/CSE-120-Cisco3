@@ -18,8 +18,8 @@ def connect_view(request, *args, **kwargs):
 		wg = WireGuard()
 		list_peers_string = wg.list_peers().stdout.decode("utf-8")
 		return HttpResponse(list_peers_string)
-		
-    elif request.method == 'POST' and 'list_peers' in request.POST:
+
+	elif request.method == 'POST' and 'list_peers' in request.POST:
 		wg = WireGuard()
 		list_peers_string = wg.list_peers().stdout.decode("utf-8")
 		return render(request, "connect.html", {})
