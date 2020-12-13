@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% if user.is_authenticated %}
@@ -6,6 +5,10 @@
                 <h1>Connect Page</h1>
 
                 <p>Connection</p>
+                <form method="get">
+                        {% csrf_token %}
+                        <button type = "submit" name ="list_peers_get">List_peers_get</button>
+                </form>
                 <form method="post">
                         {% csrf_token %}
                         <button type = "submit" name ="list_peers">List_peers</button>
