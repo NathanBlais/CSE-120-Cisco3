@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from wgprivnet.WGinstance import WireGuard
@@ -15,9 +14,14 @@ def contact_view(request, *args, **kwargs):
         #return HttpResponse("<h1>Contact Page</h1>")
 
 def connect_view(request, *args, **kwargs):
-        if request.method == 'POST' and 'list_peers' in request.POST:
+        if request.method == 'GET' and 'list_peers_get' in request.GET:
                 wg = WireGuard()
-                wg.list_peers()
+                list_peers_string = wg.list_peers().stdout.decode("utf-8")
+                return HttpResponse(list_peers_string)
+
+        elif request.method == 'POST' and 'list_peers' in request.POST:
+                wg = WireGuard()
+                list_peers_string = wg.list_peers().stdout.decode("utf-8")
                 return render(request, "connect.html", {})
 
         elif request.method == 'POST' and 'remove_client' in request.POST:
