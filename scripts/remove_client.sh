@@ -20,7 +20,10 @@ doesClientExist=$(grep "$removeClient begin" $configPath | cut -d ' ' -f 4)
 
 if [ $doesClientExist = $removeClient ];then
     echo "Client Exists"
-    #remove client
+
+    ##add way to remove client config file if it still exists
+
+    #remove client from server config
     sed -i "/\ $removeClient begin/,/\# $removeClient end/d" $configPath
     echo "Client Removed"
     exit 0

@@ -54,11 +54,14 @@ main(){
 			#install Wiregaurd, OpenSSH and __ using DietPie's own installer.
 			/boot/dietpi/dietpi-software install 172 0 6 			
 			#set up server config file
-
-			#start the website
-			python3 manage.py runserver 0.0.0.0:8080
-			
-			exit 0;;
+#needs testing
+			sed '15,$d' /etc/wireguard/wg0.conf
+			#remove example client files
+#needs testing			
+			rm client_public.key
+			rm client_private.key
+			rm wg0-client.conf
+			;;
 		Debian|Raspbian|Ubuntu)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
 			exit 1;;
@@ -71,6 +74,14 @@ main(){
 		echo "The program should have already ended"
 		exit 1
 	fi
+
+#add the website as a dameon that runs on sart up.
+
+##temporary 
+#start the website
+	python3 manage.py runserver 0.0.0.0:8080
+			
+	exit 0
 }
 
 ##### FUNCTIONS #####
