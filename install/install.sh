@@ -21,7 +21,7 @@ See if the programs and their same version numbers are already installed
 
 # Verify there is enough disk space for the install
 
-Install or Update wiregaurd and other programs 
+Install or Update wiregaurd and other programs
 
 Choose whether User or Server
 
@@ -36,7 +36,7 @@ main(){
 
 #Check that user is root
 	rootCheck
-	
+
 #Check for disk space
 	#diskSpaceCheck
 
@@ -52,15 +52,31 @@ main(){
 			pip3 install pyroute2 Django django-crispy-forms wheel virtualenv distlib tk setuptools asgiref
 			pip3 install --upgrade django
 			#install Wiregaurd, OpenSSH and __ using DietPie's own installer.
-			/boot/dietpi/dietpi-software install 172 0 6 			
+			/boot/dietpi/dietpi-software install 172 0 6
 			#set up server config file
 			sed '15,$d' /etc/wireguard/wg0.conf
-			#remove example client files		
+			#remove example client files
 			rm client_public.key
 			rm client_private.key
 			rm wg0-client.conf
 			;;
-		Raspbian|Debian|Ubuntu)
+		raspberrypi)
+		#Test all of this
+			#upgrade all packages to guarantee the latest kernel
+			apt-get update && apt-get upgrade -y
+			#Adding the Raspbian repository
+			echo "deb http://archive.raspbian.org/raspbian testing main" | sudo tee --append /etc/apt/sources.list.d/testing.list
+			apt-get update
+			printf 'Package: *\nPin: release a=testing\nPin-Priority: 50\n' | sudo tee --append /etc/apt/preferences.d/limit-testing
+			#install from reposetory
+			apt -y install qrencode python3 python3-pip python3-tk python3-django apache2 wireguard
+			#install from pip
+			pip3 install pyroute2 Django django-crispy-forms wheel virtualenv distlib tk setuptools asgiref
+			pip3 install --upgrade django
+			#set up server config file
+			./scripts/server_conf_make.sh
+			;;
+		Debian|Ubuntu)
 		#Test all of this
 			#install from reposetory
 			apt-get update && apt -y install qrencode python3 python3-pip python3-tk python3-django apache2 wireguard
@@ -77,9 +93,9 @@ main(){
 			echo "Your distribution ($distribution) is not supported. "
 			exit 1;;
 		esac
-	elif [ $_os = "Darwin" ]; then
-	elif [ $_os = "Darwin" ]; then
-	elif [ $_os = "Darwin" ]; then
+	#elif [ $_os = "Darwin" ]; then
+	#elif [ $_os = "Darwin" ]; then
+	#elif [ $_os = "Darwin" ]; then
 	else
 		echo "The program should have already ended"
 		exit 1
@@ -87,10 +103,10 @@ main(){
 
 #add the website as a dameon that runs on sart up.
 
-##temporary 
+##temporary
 #start the website
 	python3 manage.py runserver 0.0.0.0:8080
-			
+
 	exit 0
 }
 
@@ -101,7 +117,7 @@ main(){
 osCheck(){
 #List of OS found here https://en.wikipedia.org/wiki/Uname
 	_os=`uname`
-	case $_os in 
+	case $_os in
 		Linux)
 			echo "LINUX is supported" ;;
 		Darwin|*BSD|SunOS|Windows*)
@@ -110,7 +126,7 @@ osCheck(){
   		*)
 			echo "unknown: $OSTYPE"
 			exit 1 ;;
-	esac 
+	esac
 
 }
 
@@ -119,10 +135,10 @@ distroCheck(){
 	distribution=$(uname -n) #`uname -n`
 
 	#check the distro
-	case $distribution in 
+	case $distribution in
 	DietPi)
 		echo "Your distribution ($distribution) is supported.";;
-	Raspbian|Debian|Ubuntu)
+	raspberrypi|Debian|Ubuntu)
 		echo "Your distribution ($distribution) is a WIP, but not yet supported. ";;
 	*)
 		echo "Your distribution ($distribution) is not supported. "
