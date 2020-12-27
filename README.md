@@ -15,7 +15,7 @@ Check the PDF for intructions on how to install DietPi
 -----------
 To install the program
 
-  1. Download the files using the command: `wget ​https://github.com/NathanBlais/CSE-120-Cisco3/archive/main.zip`
+  1. Download the files using the command: `wget https://github.com/NathanBlais/CSE-120-Cisco3/archive/main.zip`
   2. Run the command `unzip main.zip`
   3. Run the command `chmod -R 755 CSE-120-Cisco3-main/`
   4. Run the command `cd CSE-120-Cisco3-main`
