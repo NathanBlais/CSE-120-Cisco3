@@ -11,6 +11,9 @@ Installation
 The project officialy only runs and has been tested for DietPi.
 
 Check the PDF for intructions on how to install DietPi
+
+*Update(27/12/2020): Raspberry Pi OS is now officaly supported*
+
   
 -----------
 To install the program
