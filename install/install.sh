@@ -54,22 +54,32 @@ main(){
 			#install Wiregaurd, OpenSSH and __ using DietPie's own installer.
 			/boot/dietpi/dietpi-software install 172 0 6 			
 			#set up server config file
-#needs testing
 			sed '15,$d' /etc/wireguard/wg0.conf
-			#remove example client files
-#needs testing			
+			#remove example client files		
 			rm client_public.key
 			rm client_private.key
 			rm wg0-client.conf
 			;;
-		Debian|Raspbian|Ubuntu)
+		Raspbian|Debian|Ubuntu)
+		#Test all of this
+			#install from reposetory
+			apt-get update && apt -y install qrencode python3 python3-pip python3-tk python3-django apache2 wireguard
+			#install from pip
+			pip3 install pyroute2 Django django-crispy-forms wheel virtualenv distlib tk setuptools asgiref
+			pip3 install --upgrade django
+			#set up server config file
+			./scripts/server_conf_make.sh
+			;;
+		Arch)
 			echo "Your distribution ($distribution) is a WIP, but not yet supported. "
 			exit 1;;
-			#apt-get update && apt-get install iptables wireguard qrencode
 		*)
 			echo "Your distribution ($distribution) is not supported. "
 			exit 1;;
-		esac		
+		esac
+	elif [ $_os = "Darwin" ]; then
+	elif [ $_os = "Darwin" ]; then
+	elif [ $_os = "Darwin" ]; then
 	else
 		echo "The program should have already ended"
 		exit 1
@@ -112,9 +122,8 @@ distroCheck(){
 	case $distribution in 
 	DietPi)
 		echo "Your distribution ($distribution) is supported.";;
-	Debian|Raspbian|Ubuntu)
-		echo "Your distribution ($distribution) is a WIP, but not yet supported. "
-		exit 1;;
+	Raspbian|Debian|Ubuntu)
+		echo "Your distribution ($distribution) is a WIP, but not yet supported. ";;
 	*)
 		echo "Your distribution ($distribution) is not supported. "
 		exit 1;;
