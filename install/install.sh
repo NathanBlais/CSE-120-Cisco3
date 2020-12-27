@@ -136,9 +136,9 @@ distroCheck(){
 
 	#check the distro
 	case $distribution in
-	DietPi)
+	DietPi|raspberrypi)
 		echo "Your distribution ($distribution) is supported.";;
-	raspberrypi|Debian|Ubuntu)
+	Debian|Ubuntu)
 		echo "Your distribution ($distribution) is a WIP, but not yet supported. ";;
 	*)
 		echo "Your distribution ($distribution) is not supported. "
